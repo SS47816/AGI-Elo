@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveSceneGen Leaderboard</title>
+    <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/tabs.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span>Shuo Sun<sup>&dagger;</sup>,</span>
+              <span>Zekai Gu<sup>&dagger;</sup>,</span>
+              <span>Tianchen Sun<sup>&dagger;</sup>,</span>
+              <span>Jiawei Sun,</span>
+              <span>Chengran Yuan,</span>
+              <span>Yuhang Han,</span>
+              <span>Dongen Li,</span>
+              <span><br>and Marcelo H. Ang Jr.</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Advanced Robotics Centre, National University of Singapore</span>
+              <span class="eql-cntrb"><small><br><sup>&dagger;</sup>Indicates Equal Contribution</small></span>
+            </div>
+
+            <div class="column has-text-centered">
+
+              <!-- ArXiv abstract Link -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2309.14685" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Arxiv PDF link -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2309.14685.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>PDF</span>
+                </a>
+              </span>
+
+              <!-- Github link -->
+              <span class="link-block">
+                <a href="https://github.com/SS47816/DriveSceneGen" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                </a>
+              </span>
+
+              <!-- Leaderboard link -->
+              <span class="link-block">
+                <a href="index.html"
+                class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-home"></i>
+                  </span>
+                  <span>Home</span>
+                </a>
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h1 class="title is-2 has-text-centered">DriveSceneGen Leaderboard</h1>
+
+      <div class="content">
+        <p class="has-text-centered">
+          This leaderboard tracks the performance of different models on the DriveSceneGen benchmark.
+        </p>
+
+        <!-- Tab switching component -->
+        <div class="tabs-container">
+            <ul class="tabs">
+                <li class="active" data-tab="tab1">Computer Vision</li>
+                <li data-tab="tab2">LLM</li>
+                <li data-tab="tab3">Autonomous Driving</li>
+            </ul>
+
+            <div id="tab1" class="tab-content active">
+                <h3>Code Generation</h3>
+                <p>This tab shows the leaderboard for code generation tasks.</p>
+                <table class="table is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Model</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Model A</td>
+                            <td>95.2</td>
+                            <td>2023-04-15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Model B</td>
+                            <td>93.7</td>
+                            <td>2023-04-10</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Model C</td>
+                            <td>91.5</td>
+                            <td>2023-03-28</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="tab2" class="tab-content">
+                <h3>Self Repair</h3>
+                <p>This tab shows the leaderboard for self repair tasks.</p>
+                <table class="table is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Model</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Model B</td>
+                            <td>94.1</td>
+                            <td>2023-04-10</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Model A</td>
+                            <td>92.8</td>
+                            <td>2023-04-15</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Model D</td>
+                            <td>90.3</td>
+                            <td>2023-03-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="tab3" class="tab-content">
+                <h3>Test Output Prediction</h3>
+                <p>This tab shows the leaderboard for test output prediction tasks.</p>
+                <table class="table is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Model</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Model C</td>
+                            <td>96.4</td>
+                            <td>2023-03-28</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Model A</td>
+                            <td>94.7</td>
+                            <td>2023-04-15</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Model E</td>
+                            <td>93.2</td>
+                            <td>2023-02-20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="tab4" class="tab-content">
+                <h3>Code Execution</h3>
+                <p>This tab shows the leaderboard for code execution tasks.</p>
+                <table class="table is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Model</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Model D</td>
+                            <td>97.1</td>
+                            <td>2023-03-15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Model B</td>
+                            <td>95.3</td>
+                            <td>2023-04-10</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Model A</td>
+                            <td>93.9</td>
+                            <td>2023-04-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tab switching script -->
+  <script src="static/js/tabs.js"></script>
+</body>
+</html>
