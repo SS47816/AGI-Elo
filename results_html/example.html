@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveELO Interactive Visualizations</title>
+</head>
+<body>
+    <header>
+        <h1>DriveELO Interactive Visualizations</h1>
+    </header>
+    
+    <div class="container">
+        <div class="description">
+            <h2>About These Visualizations</h2>
+            <p>
+                These interactive visualizations display the rating distributions and performance metrics
+                from the DriveELO system. You can interact with the plots to explore the data in detail.
+            </p>
+            <p>
+                <strong>Features:</strong>
+                <ul>
+                    <li>Hover over elements to see detailed information</li>
+                    <li>Click on legend items to hide/show data series</li>
+                    <li>Use the toolbar to pan, zoom, and save the visualization</li>
+                </ul>
+            </p>
+        </div>
+        
+        <div class="visualization">
+            <h2>Rating Distributions</h2>
+            <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+            <!-- Embed the ratings visualization using an iframe -->
+            <iframe src="cv/classification/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+        </div>
+        
+        <div class="visualization">
+            <h2>Outcome vs Rating</h2>
+            <p>This visualization shows the relationship between rating differences and outcomes.</p>
+            <!-- Embed the outcome vs rating visualization using an iframe -->
+            <iframe src="cv/classification/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Created with Bokeh and DriveELO</p>
+    </footer>
+    
+    <!-- Bokeh JS -->
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.7.2.min.js"></script>
+</body>
+</html>

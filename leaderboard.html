@@ -14,12 +14,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="stylesheet" href="static/css/index.css">
     <link rel="stylesheet" href="static/css/tabs.css">
+    <link rel="stylesheet" href="static/css/leaderboard.css">
+
+    <!-- Bokeh CSS -->
+    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-3.7.2.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="static/js/fontawesome.all.min.js"></script>
     <script src="static/js/bulma-carousel.min.js"></script>
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
+
+    <style>
+        iframe {
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .visualization {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .visualization h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .visualization p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .tabs-container {
+            margin-top: 2rem;
+        }
+        .tab-content {
+            padding: 1rem;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -110,150 +147,126 @@
 
         <!-- Tab switching component -->
         <div class="tabs-container">
+            <!-- Main tabs -->
             <ul class="tabs">
-                <li class="active" data-tab="tab1">Computer Vision</li>
-                <li data-tab="tab2">LLM</li>
-                <li data-tab="tab3">Autonomous Driving</li>
+                <li class="active" data-tab="tab1">Vision</li>
+                <li data-tab="tab2">Language</li>
+                <li data-tab="tab3">Action</li>
             </ul>
 
+            <!-- Tab 1 (Vision) and its contents -->
             <div id="tab1" class="tab-content active">
-                <h3>Code Generation</h3>
-                <p>This tab shows the leaderboard for code generation tasks.</p>
-                <table class="table is-fullwidth is-striped">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Model</th>
-                            <th>Score</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Model A</td>
-                            <td>95.2</td>
-                            <td>2023-04-15</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Model B</td>
-                            <td>93.7</td>
-                            <td>2023-04-10</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Model C</td>
-                            <td>91.5</td>
-                            <td>2023-03-28</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ul class="tabs subtabs">
+                    <li class="active" data-tab="tab1-1">Classification</li>
+                    <li data-tab="tab1-2">Detection</li>
+                </ul>
+
+                <!-- Tab 1-1 content -->
+                <div id="tab1-1" class="tab-content active">
+                    <h3>Vision Classification</h3>
+                    <div class="visualization">
+                        <h2>Rating Distributions</h2>
+                        <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                        <iframe src="results_html/vision/classification/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                    <div class="visualization">
+                        <h2>Outcome vs Rating</h2>
+                        <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                        <iframe src="results_html/vision/classification/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <!-- Tab 1-2 content -->
+                <div id="tab1-2" class="tab-content">
+                    <h3>Vision Detection</h3>
+                    <div class="visualization">
+                        <h2>Rating Distributions</h2>
+                        <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                        <iframe src="results_html/vision/detection/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                    <div class="visualization">
+                        <h2>Outcome vs Rating</h2>
+                        <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                        <iframe src="results_html/vision/detection/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                </div>
             </div>
 
+            <!-- Tab 2 (Language) and its contents -->
             <div id="tab2" class="tab-content">
-                <h3>Self Repair</h3>
-                <p>This tab shows the leaderboard for self repair tasks.</p>
-                <table class="table is-fullwidth is-striped">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Model</th>
-                            <th>Score</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Model B</td>
-                            <td>94.1</td>
-                            <td>2023-04-10</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Model A</td>
-                            <td>92.8</td>
-                            <td>2023-04-15</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Model D</td>
-                            <td>90.3</td>
-                            <td>2023-03-15</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ul class="tabs subtabs">
+                    <li class="active" data-tab="tab2-1">Question & Answering</li>
+                    <li data-tab="tab2-2">Code Generation</li>
+                </ul>
+
+                <!-- Tab 2-1 content -->
+                <div id="tab2-1" class="tab-content active">
+                    <h3>Question & Answering</h3>
+                    <div class="visualization">
+                        <h2>Rating Distributions</h2>
+                        <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                        <iframe src="results_html/language/question_answering/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                    <div class="visualization">
+                        <h2>Outcome vs Rating</h2>
+                        <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                        <iframe src="results_html/language/question_answering/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <!-- Tab 2-2 content -->
+                <div id="tab2-2" class="tab-content">
+                  <h3>Code Generation</h3>
+                  <div class="visualization">
+                      <h2>Rating Distributions</h2>
+                      <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                      <iframe src="results_html/language/code_generation/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                  </div>
+                  <div class="visualization">
+                      <h2>Outcome vs Rating</h2>
+                      <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                      <iframe src="results_html/language/code_generation/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                  </div>
+              </div>
             </div>
 
+            <!-- Tab 3 (Action) and its contents -->
             <div id="tab3" class="tab-content">
-                <h3>Test Output Prediction</h3>
-                <p>This tab shows the leaderboard for test output prediction tasks.</p>
-                <table class="table is-fullwidth is-striped">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Model</th>
-                            <th>Score</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Model C</td>
-                            <td>96.4</td>
-                            <td>2023-03-28</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Model A</td>
-                            <td>94.7</td>
-                            <td>2023-04-15</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Model E</td>
-                            <td>93.2</td>
-                            <td>2023-02-20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <ul class="tabs subtabs">
+                    <li class="active" data-tab="tab3-1">Motion Prediction</li>
+                    <li data-tab="tab3-2">Motion Planning</li>
+                </ul>
 
-            <div id="tab4" class="tab-content">
-                <h3>Code Execution</h3>
-                <p>This tab shows the leaderboard for code execution tasks.</p>
-                <table class="table is-fullwidth is-striped">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Model</th>
-                            <th>Score</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Model D</td>
-                            <td>97.1</td>
-                            <td>2023-03-15</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Model B</td>
-                            <td>95.3</td>
-                            <td>2023-04-10</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Model A</td>
-                            <td>93.9</td>
-                            <td>2023-04-15</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Tab 3-2 content -->
+                <div id="tab3-1" class="tab-content active">
+                    <h3>Action Prediction</h3>
+                    <div class="visualization">
+                        <h2>Rating Distributions</h2>
+                        <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                        <iframe src="results_html/action/motion_prediction/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                    <div class="visualization">
+                        <h2>Outcome vs Rating</h2>
+                        <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                        <iframe src="results_html/action/motion_prediction/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <!-- Tab 3-1 content -->
+                <div id="tab3-2" class="tab-content">
+                  <h3>Action Planning</h3>
+                  <div class="visualization">
+                      <h2>Rating Distributions</h2>
+                      <p>This visualization shows the distribution of test case ratings and model ratings.</p>
+                      <iframe src="results_html/action/motion_planning/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                  </div>
+                  <div class="visualization">
+                      <h2>Outcome vs Rating</h2>
+                      <p>This visualization shows the relationship between rating differences and outcomes.</p>
+                      <iframe src="results_html/action/motion_planning/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                  </div>
+              </div>
+
             </div>
         </div>
       </div>

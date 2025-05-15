@@ -10,16 +10,13 @@
  */
 
 function initTabs() {
-    // 获取所有标签和内容
     const tabs = document.querySelectorAll('.tabs li');
-    const tabContents = document.querySelectorAll('.tab-content');
     
-    // 检测是否为移动设备
+    // For mobile responsiveness
     function isMobile() {
         return window.innerWidth < 768;
     }
     
-    // 更新标签列表的类
     function updateTabsClass() {
         const tabsList = document.querySelectorAll('.tabs');
         tabsList.forEach(list => {
@@ -31,44 +28,73 @@ function initTabs() {
         });
     }
     
-    // 初始化时检查
     updateTabsClass();
-    
-    // 监听窗口大小变化
     window.addEventListener('resize', updateTabsClass);
     
-    // 为每个标签添加点击事件
+    // Handle tab clicks
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 找到当前标签所属的标签组
-            const tabGroup = tab.closest('.tabs-container');
-            const groupTabs = tabGroup.querySelectorAll('.tabs li');
-            const groupContents = tabGroup.querySelectorAll('.tab-content');
-            
-            // 移除所有标签和内容的活动状态
-            groupTabs.forEach(t => t.classList.remove('active'));
-            groupContents.forEach(content => content.classList.remove('active'));
-            
-            // 为当前点击的标签和对应内容添加活动状态
-            tab.classList.add('active');
             const tabId = tab.getAttribute('data-tab');
-            const content = tabGroup.querySelector(`#${tabId}`);
-            if (content) {
-                content.classList.add('active');
+            const tabGroup = tab.closest('.tabs-container');
+            
+            if (tab.parentElement.classList.contains('subtabs')) {
+                // If clicking a subtab
+                // Only handle the subtab content within the current main tab
+                const currentMainTab = tab.closest('.tab-content');
+                
+                // Remove active class from sibling subtabs only
+                const siblingSubtabs = tab.parentElement.querySelectorAll('li');
+                siblingSubtabs.forEach(t => t.classList.remove('active'));
+                
+                // Remove active class from sibling subcontent only
+                const siblingSubcontents = currentMainTab.querySelectorAll('.tab-content');
+                siblingSubcontents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked subtab
+                tab.classList.add('active');
+                
+                // Add active class to corresponding subcontent
+                const subcontent = currentMainTab.querySelector(`#${tabId}`);
+                if (subcontent) {
+                    subcontent.classList.add('active');
+                }
+            } else {
+                // If clicking a main tab
+                // Remove active class from all main tabs
+                const mainTabs = tabGroup.querySelectorAll('.tabs:not(.subtabs) li');
+                mainTabs.forEach(t => t.classList.remove('active'));
+                
+                // Remove active class from all main tab content
+                const mainContents = tabGroup.querySelectorAll('.tabs-container > .tab-content');
+                mainContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked main tab
+                tab.classList.add('active');
+                
+                // Add active class to main tab content
+                const mainContent = tabGroup.querySelector(`#${tabId}`);
+                if (mainContent) {
+                    mainContent.classList.add('active');
+                    
+                    // If no subtab is active, activate the first one
+                    if (!mainContent.querySelector('.subtabs li.active')) {
+                        const firstSubtab = mainContent.querySelector('.subtabs li');
+                        const firstSubcontent = mainContent.querySelector('.subtabs + .tab-content');
+                        if (firstSubtab && firstSubcontent) {
+                            firstSubtab.classList.add('active');
+                            firstSubcontent.classList.add('active');
+                        }
+                    }
+                }
             }
         });
     });
     
-    // 确保至少有一个标签处于活动状态
+    // Initialize first tab and subtab if none are active
     document.querySelectorAll('.tabs-container').forEach(container => {
-        const containerTabs = container.querySelectorAll('.tabs li');
-        const containerContents = container.querySelectorAll('.tab-content');
-        
-        if (containerTabs.length > 0 && !container.querySelector('.tabs li.active')) {
-            containerTabs[0].classList.add('active');
-            if (containerContents.length > 0) {
-                containerContents[0].classList.add('active');
-            }
+        const mainTab = container.querySelector('.tabs:not(.subtabs) li');
+        if (mainTab && !container.querySelector('.tabs:not(.subtabs) li.active')) {
+            mainTab.click();
         }
     });
 }

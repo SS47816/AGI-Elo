@@ -14,12 +14,26 @@
 }
 
 .tabs li {
-    flex-grow: 1;
+    flex: 1;  /* Changed from flex-grow: 1 to flex: 1 */
     text-align: center;
     padding: 10px 20px;
     cursor: pointer;
     background: #ddd;
     transition: background-color 0.3s ease;
+    /* Ensure text doesn't wrap */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Specific styles for subtabs */
+.subtabs {
+    margin-top: 10px;
+}
+
+.subtabs li {
+    flex: 1;  /* Equal width for subtabs */
+    min-width: 0;  /* Allow flex items to shrink below content size */
 }
 
 .tabs li.active,
