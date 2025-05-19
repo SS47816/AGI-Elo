@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
   <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/tabs.css">
   <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-3.7.2.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
@@ -48,11 +50,11 @@
 
 
   <section class="hero">
-    <div class="hero-body">
+    <div class="hero-body" style="padding-bottom: 0;">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch</h1>
+            <h1 class="title is-2 publication-title">AGI-Elo: How Far Are We From Mastering A Task?</h1>
 
             <!-- Paper authors -->
             <!-- <div class="is-size-5 publication-authors">
@@ -83,19 +85,22 @@
             </div> -->
 
             <div class="is-size-5 publication-authors">
-              <span>Shuo Sun<sup>&dagger;</sup>,</span>
-              <span>Zekai Gu<sup>&dagger;</sup>,</span>
-              <span>Tianchen Sun<sup>&dagger;</sup>,</span>
-              <span>Jiawei Sun,</span>
-              <span>Chengran Yuan,</span>
-              <span>Yuhang Han,</span>
-              <span>Dongen Li,</span>
-              <span><br>and Marcelo H. Ang Jr.</span>
+              <span>Shuo Sun<sup>1,3</sup>,</span>
+              <span>Yimin Zhao<sup>1</sup>,</span>
+              <span>Christina Dao Wen Lee<sup>1</sup>,</span>
+              <span>Jiawei Sun<sup>1</sup>,</span>
+              <span>Chengran Yuan<sup>1</sup>,</span>
+              <span><br>Zefan Huang<sup>1</sup>,</span>
+              <span>Dongen Li<sup>1</sup>,</span>
+              <span>Justin KW Yeoh<sup>1</sup>,</span>
+              <span>Alok Prakash<sup>3</sup>,</span>
+              <span><br>Thomas W. Malone<sup>2,3</sup>,</span>
+              <span>Marcelo H. Ang Jr.<sup>1,3</sup></span>
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block">Advanced Robotics Centre, National University of Singapore</span>
-              <span class="eql-cntrb"><small><br><sup>&dagger;</sup>Indicates Equal Contribution</small></span>
+              <span class="author-block"><br><sup>1</sup>National University of Singapore, <sup>2</sup>Massachusetts Institute of Technology,</span>
+              <span class="author-block"><sup>3</sup>Singapore MIT Alliance for Research and Technology</span>
             </div>
 
             <div class="column has-text-centered">
@@ -141,21 +146,9 @@
                   <span class="icon">
                     <i class="fab fa-github"></i>
                   </span>
-                  <span>Code (Coming Soon)</span>
+                  <span>Code</span>
                 </a>
               </span>
-
-              <!-- Leaderboard link -->
-              <span class="link-block">
-                <a href="leaderboard.html"
-                class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fas fa-chart-bar"></i>
-                  </span>
-                  <span>Leaderboard</span>
-                </a>
-              </span>
-
             </div>
           </div>
         </div>
@@ -164,23 +157,215 @@
   </div>
 </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
+<section class="section" style="padding-top: 0;">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <source src="static/videos/video.mp4"
-        type="video/mp4">
-      </video> -->
-      <img src="static/images/cover.png" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          An illustration of a set of generated scenarios and its components at the various stages of DriveSceneGen pipeline.
-        </h2>
+    <div class="content">
+      <!-- Tab switching component -->
+      <div class="tabs-container">
+          <!-- Main tabs -->
+          <ul class="tabs">
+              <li class="active" data-tab="tab1">Vision</li>
+              <li data-tab="tab2">Language</li>
+              <li data-tab="tab3">Action</li>
+          </ul>
+
+          <!-- Tab 1 (Vision) and its contents -->
+          <div id="tab1" class="tab-content active">
+              <ul class="tabs subtabs">
+                  <li class="active" data-tab="tab1-1">Image Classification</li>
+                  <li data-tab="tab1-2">Object Detection</li>
+              </ul>
+
+              <!-- Tab 1-1 content -->
+              <div id="tab1-1" class="tab-content active">
+                  <div class="visualization">
+                      <iframe src="results_html/vision/classification/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on six distinct datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                    </div>
+                  <div class="visualization">
+                      <iframe src="results_html/vision/classification/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on each dataset.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Tab 1-2 content -->
+              <div id="tab1-2" class="tab-content">
+                  <div class="visualization">
+                      <iframe src="results_html/vision/detection/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on object detection datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                  </div>
+                  <div class="visualization">
+                      <iframe src="results_html/vision/detection/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on object detection datasets.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Tab 2 (Language) and its contents -->
+          <div id="tab2" class="tab-content">
+              <ul class="tabs subtabs">
+                  <li class="active" data-tab="tab2-1">Question & Answering</li>
+                  <li data-tab="tab2-2">Code Generation</li>
+              </ul>
+
+              <!-- Tab 2-1 content -->
+              <div id="tab2-1" class="tab-content active">
+                  <div class="visualization">
+                      <iframe src="results_html/language/question_answering/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on question answering datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                  </div>
+                  <div class="visualization">
+                      <iframe src="results_html/language/question_answering/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on question answering datasets.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Tab 2-2 content -->
+              <div id="tab2-2" class="tab-content">
+                  <div class="visualization">
+                      <iframe src="results_html/language/code_generation/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on code generation datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                  </div>
+                  <div class="visualization">
+                      <iframe src="results_html/language/code_generation/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on code generation datasets.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Tab 3 (Action) and its contents -->
+          <div id="tab3" class="tab-content">
+              <ul class="tabs subtabs">
+                  <li class="active" data-tab="tab3-1">Motion Prediction</li>
+                  <li data-tab="tab3-2">Motion Planning</li>
+              </ul>
+
+              <!-- Tab 3-1 content -->
+              <div id="tab3-1" class="tab-content active">
+                  <div class="visualization">
+                      <iframe src="results_html/action/motion_prediction/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on motion prediction datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                  </div>
+                  <div class="visualization">
+                      <iframe src="results_html/action/motion_prediction/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on motion prediction datasets.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Tab 3-2 content -->
+              <div id="tab3-2" class="tab-content">
+                  <div class="visualization">
+                      <iframe src="results_html/action/motion_planning/ratings_visualization.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the estimated 
+                          <span style="color:deepskyblue;">test case</span> rating distribution and 
+                          <span style="color:deeppink;">agent</span> ratings on motion planning datasets. 
+                          The <span style="color:crimson;">percentile curve</span> represents the cumulative percentage 
+                          of test cases up to each rating level. For each 
+                          <span style="color:deeppink;">agent</span>, the portion of the 
+                          <span style="color:deepskyblue;">test cases</span> and the 
+                          <span style="color:crimson;">percentile curve</span> that lies to the right 
+                          represents the fraction of the dataset that remains difficult (below <em>50%</em> confidence).
+                        </p>
+                      </div>
+                  </div>
+                  <div class="visualization">
+                      <iframe src="results_html/action/motion_planning/outcome_vs_rating.html" width="100%" height="550px" frameborder="0"></iframe>
+                      <div class="iframe-caption">
+                        <p>
+                          Visualization of the predicted (theoretical) agent performances based on the differences between agents and <strong>test cases</strong> vs. the <strong>empirical</strong> performance obtained on motion planning datasets.
+                        </p>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
     </div>
   </div>
+
 </section>
-<!-- End teaser video -->
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
@@ -190,7 +375,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Realistic and diverse traffic scenarios in large quantities are crucial for the development and validation of autonomous driving systems. However, owing to numerous difficulties in the data collection process and the reliance on intensive annotations, real-world datasets lack sufficient quantity and diversity to support the increasing demand for data. This work introduces DriveSceneGen, a data-driven driving scenario generation method that learns from the real-world driving dataset and generates entire dynamic driving scenarios from scratch. DriveSceneGen is able to generate novel driving scenarios that align with real-world data distributions with high fidelity and diversity. Experimental results on 5k generated scenarios highlight the generation quality, diversity, and scalability compared to real-world datasets. To the best of our knowledge, DriveSceneGen is the first method that generates novel driving scenarios involving both static map elements and dynamic traffic participants from scratch.
+            As the field progresses toward Artificial General Intelligence (AGI), there is a pressing need for more comprehensive and insightful evaluation frameworks that go beyond aggregate performance metrics. This paper introduces a unified rating system that jointly models the difficulty of individual test cases and the competency of AI models (or humans) across vision, language, and action domains. Unlike existing metrics that focus solely on models, our approach allows for fine-grained, difficulty-aware evaluations through competitive interactions between models and tasks, capturing both the long-tail distribution of real-world challenges and the competency gap between current models and full task mastery. We validate the generalizability and robustness of our system through extensive experiments on multiple established datasets and models across distinct AGI domains. The resulting rating distributions offer novel perspectives and interpretable insights into task difficulty, model progression, and the outstanding challenges that remain on the path to achieving full AGI task mastery.
           </p>
         </div>
       </div>
@@ -199,108 +384,22 @@
 </section>
 <!-- End paper abstract -->
 
-
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-
-      <div class="item">
-        <img src="static/images/pipeline.png" alt="MY ALT TEXT"/>
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top: 24px;">
+      <!-- <video poster="" id="tree" autoplay controls muted loop height="100%">
+        <source src="static/videos/video.mp4"
+        type="video/mp4">
+      </video> -->
+      <img src="static/images/cover.png" alt="MY ALT TEXT"/>
         <h2 class="subtitle has-text-centered">
-          An overview of the DriveSceneGen pipeline. The pipeline consists of two stages: a generation stage and a simulation stage. In the generation stage, a diffusion model is employed to generate a rasterized Birds-Eye-View (BEV) representation of the initial scene of the driving scenario, which is then decoded by a rule-based vectorization method. In the simulation stage, the vectorized representation of the scenario is consumed by a simulation network as the initial scene to predict multi-modal joint distributions of the generated agents’ future trajectories, with each distribution representing a distinct possible outcome from this same initial scene.
+          In this paper, we address long-standing questions regarding the current capabilities of AGI and humans on challenging tasks by proposing a standardized framework to quantitatively assess task difficulty, evaluate AGI competency, and identify gaps to task mastery.
         </h2>
-      </div>
-      <div class="item">
-        <img src="static/images/diffusion.png" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Qualitative evaluation of the raster initial scenes generated by DriveSceneGen. Compared to the ground truths, the generated samples show high fidelity in terms of road geometry, lane topology, and agents’ initial state distribution. Meanwhile, the generated results demonstrate both inter-category and intra-category diversities.
-        </h2>
-      </div>
-      <!-- <div class="item">
-        <img src="static/images/vectorization.png" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          A visualization of the results obtained at each stage of the proposed vectorization method. The example feature map used represents a scene of 80m × 80m.
-       </h2>
-      </div> -->
-      <div class="item">
-        <img src="static/images/simulation.png" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Qualitative evaluation of the different possible future scenarios generated from the same initial scene. Comparing the scenarios in each column, each future scenario presents distinct agent behaviors starting from the same initial scene.
-        </h2>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-<!-- End image carousel -->
-
-
-
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-
-      <h2 class="title is-3">Demo Video</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-
-          <div class="publication-video">
-            <video poster="" id="tree" autoplay controls muted loop height="100%">
-              <source src="static/videos/video.mp4"
-              type="video/mp4">
-            </video>
-            <!-- Your video here -->
-            <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
-<!-- End youtube video -->
-
-
-<!-- Video carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End video carousel -->
-
-
-
-
-
+<!-- End teaser video -->
 
 <!-- Paper poster -->
 <!-- <section class="hero is-small is-light">
@@ -322,13 +421,7 @@
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
-        @misc{sun2023drivescenegen,
-          title={DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch},
-          author={Shuo Sun and Zekai Gu and Tianchen Sun and Jiawei Sun and Chengran Yuan and Yuhang Han and Dongen Li and Marcelo H. Ang Jr au2},
-          year={2023},
-          eprint={2309.14685},
-          archivePrefix={arXiv},
-          primaryClass={cs.RO}
+        @misc{
         }
       </code></pre>
     </div>
@@ -348,6 +441,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Tab switching script -->
+<script src="static/js/tabs.js"></script>
 
 <!-- Statcounter tracking code -->
 

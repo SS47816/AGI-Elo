@@ -235,20 +235,32 @@ def plot_evaluation_trends(record_df: pd.DataFrame, save_path: str, dataset_name
     rho_test_case = record_df["Test Case rho"].values
     rho_model = record_df["Model rho"].values
 
-    fig, axes = plt.subplots(1, 4, figsize=(18, 5), sharex=True)
-    metrics = [("MAE", mae), ("MSE", mse), ("Model rho", rho_model), ("Test Case rho", rho_test_case)]
-    colors = ["#2ca02c", "#1f77b4", "#ff7f0e", "#ff7f0e"]
+    metrics = [("MAE", mae), ("MSE", mse), (r"$\rho_t$", rho_test_case), (r"$\rho_a$", rho_model), ]
+    # Swap order of metrics
+    # metric_keys = ["MAE", "MSE", "Test Case rho", "Model rho"]
+    titles = ["MAE", "MSE", r"$\rho_t$", r"$\rho_a$"]
+    # colors = ["#2ca02c", "#1f77b4", "#ff7f0e", "#ff7f0e"]
+    colors = ['#F3CCDB', '#A8D1E1', '#62A9C8', '#147EBC'] # pink to blue '#E5E5F3',
 
+    fig, axes = plt.subplots(1, 4, figsize=(22, 5), sharex=True)
     for ax, (title, values), color in zip(axes, metrics, colors):
         ax.plot(x, values, marker="o", color=color, linewidth=2)
         # ax.set_title(title, fontsize=14)
-        ax.set_xlabel("% of Matches", fontsize=12)
-        ax.set_ylabel(title, fontsize=12)
+        ax.set_xlabel("% of Matches", fontsize=20, fontweight="bold")
+        ax.set_ylabel(title, fontsize=20, fontweight="bold")
+        ax.tick_params(axis='both', labelsize=16)
         ax.grid(True, linestyle="--", alpha=0.6)
+
+        # Legend in top right, slightly lower
+        ax.legend(loc="upper right", fontsize=16)
+
+        if title == titles[-1]:
+            ax.set_ylim(0, 1)
+            ax.legend(loc="lower right", fontsize=16)
 
     plt.tight_layout()
     if save_path:
-        plt.savefig(save_path, bbox_inches="tight")
+        plt.savefig(save_path, bbox_inches="tight", dpi=300)
     if show_plot:
         plt.show()
     plt.close()

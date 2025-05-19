@@ -1,6 +1,12 @@
 # Academic Project Page Template
 This is an academic paper project page template.
 
+# TODO
+- [ ] Change button links to the correct pages
+- [ ] Change citation BibTeX
+- [ ] Change correct files and media
+- [ ] Write bokeh_viz README.md
+- [ ] Translate everything to English
 
 Example project pages built using this template are:
 - https://www.vision.huji.ac.il/deepsim/

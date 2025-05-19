@@ -12,6 +12,7 @@ Both are saved as standalone HTML files.
 import argparse
 from pathlib import Path
 import matplotlib.cm as cm
+from matplotlib.colors import Normalize, LinearSegmentedColormap
 
 import numpy as np
 import pandas as pd
@@ -31,6 +32,10 @@ from bokeh.plotting import curdoc
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from tqdm import tqdm
 
+# 全局字体大小设置
+fontsize_l = 12  # 大字体
+fontsize_m = 10  # 中字体
+fontsize_s = 8   # 小字体
 
 def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_path,
                        bin_size=100, left_margin=200, right_margin=100):
@@ -56,16 +61,52 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
     sorted_ratings = np.sort(test_case_ratings)
     
     # Pick colors
-    color_hist = '#EF7C00'  # NUS橙色
-    color_curve = '#003D7C'  # NUS蓝色
-    model_colors = cm.get_cmap('Paired', num_models).colors
-
-    # Calculate histogram data first
+    color_hist = "#{:02x}{:02x}{:02x}".format(74, 98, 138)  # 深蓝色
+    color_curve = '#A5678E'  # 紫色
+    
+    # 为模型创建自定义颜色方案
+    custom_red_colors = ['#DC3971', '#EC719F', '#F3B3CC', '#ABE5E8', '#34ADAE']
+    custom_cmap = LinearSegmentedColormap.from_list("custom_red", custom_red_colors)
+    # 将numpy颜色数组转换为十六进制字符串
+    model_colors = []
+    for i in np.linspace(0, 1, num_models):
+        rgba = custom_cmap(i)
+        # 转换RGBA为十六进制颜色字符串
+        hex_color = "#{:02x}{:02x}{:02x}".format(
+            int(rgba[0] * 255), 
+            int(rgba[1] * 255), 
+            int(rgba[2] * 255)
+        )
+        model_colors.append(hex_color)
+    
+    # 为柱状图创建渐变色
+    # 注意: Matplotlib 3.7+ 已经弃用 cm.get_cmap 方法
+    # 可以用以下替代方式: 
+    # import matplotlib.pyplot as plt
+    # cmap = plt.get_cmap("Blues") 或
+    # import matplotlib as mpl
+    # cmap = mpl.colormaps["Blues"]
+    cmap = cm.get_cmap("Blues")
+    
     rating_start = (sorted_ratings.min() // 100) * 100
     rating_end = ((sorted_ratings.max() // 100) + 1) * 100 + 1
     rating_bins = np.arange(start=rating_start, stop=rating_end, step=bin_size)
     
     hist, edges = np.histogram(test_case_ratings, bins=rating_bins)
+    
+    # 重新计算bin_colors，使用正确的bin_centers
+    norm = Normalize(vmin=rating_start, vmax=rating_end)
+    bin_centers = [(edges[i] + edges[i+1])/2 for i in range(len(edges)-1)]
+    # 将numpy颜色数组转换为十六进制字符串
+    bin_colors = []
+    for center in bin_centers:
+        rgba = cmap(norm(center))
+        hex_color = "#{:02x}{:02x}{:02x}".format(
+            int(rgba[0] * 255), 
+            int(rgba[1] * 255), 
+            int(rgba[2] * 255)
+        )
+        bin_colors.append(hex_color)
     
     # 使用更精确的累积百分比计算方法 - 与visualization.py一致
     cumulative_percent = np.arange(1, len(sorted_ratings) + 1) / len(sorted_ratings) * 100
@@ -76,6 +117,7 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
         bottom=np.zeros(len(hist)),
         left=edges[:-1],
         right=edges[1:],
+        color=bin_colors,
     ))
     
     # 使用排序后的原始数据点作为x轴，而非bin边界
@@ -88,15 +130,13 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
     model_y = []
     model_names = []
     model_ratings = []
-    model_colors = []
     
     for i, (name, rating) in enumerate(zip(models_df["Name"].values, models_df["Rating"].values)):
-        color = Category20[20][i % 20]
+        color = model_colors[i]
         model_x.append(rating)
         model_y.append(max(hist) / 2)
         model_names.append(name)
         model_ratings.append(rating)
-        model_colors.append(color)
     
     # Create a single source for all models
     combined_model_source = ColumnDataSource(data=dict(
@@ -120,11 +160,26 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
         sizing_mode="stretch_both"  # Make the figure stretch to fill available space
     )
     
+    # 设置字体和轴标签样式，与visualization.py一致
+    p.xaxis.axis_label = "Rating"
+    p.yaxis.axis_label = "Number of Test Cases"
+    p.xaxis.axis_label_text_font_size = f"{fontsize_l}pt"
+    p.xaxis.axis_label_text_font_style = "bold"
+    p.yaxis.axis_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis.axis_label_text_font_style = "bold"
+    p.yaxis.axis_label_text_color = color_hist
+    
+    # 设置刻度标签样式
+    p.xaxis.major_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis.major_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis.major_label_text_color = color_hist
+    
     # Add histogram
+    fixed_legend_color = "#4A628A"  # 深蓝色为Test Cases图例指定固定颜色
     hist_renderer = p.quad(
         top='top', bottom='bottom', left='left', right='right',
         source=hist_source,
-        fill_color=color_hist, line_color="black", alpha=0.8,
+        fill_color='color', line_color="black", alpha=0.8,
         legend_label="Test Cases"
     )
     
@@ -159,10 +214,14 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
     # Add axis for cumulative percentage - ensure proper alignment
     right_axis = p.yaxis[0].clone(y_range_name="cumulative")
     p.add_layout(right_axis, 'right')
-    p.yaxis[0].axis_label_text_color = "black"  # 主y轴标签颜色
+    
+    # 设置累积百分比轴的样式，与visualization.py一致
     p.yaxis[1].axis_label = "Cumulative Percentage"
-    p.yaxis[1].axis_label_text_color = "black"  # 次y轴标签颜色
-    p.yaxis[1].major_label_text_color = "black"  # 次y轴刻度标签颜色
+    p.yaxis[1].axis_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis[1].axis_label_text_font_style = "bold"
+    p.yaxis[1].axis_label_text_color = color_curve
+    p.yaxis[1].major_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis[1].major_label_text_color = color_curve
     
     # Format tick marks to avoid scientific notation
     p.yaxis[0].formatter.use_scientific = False
@@ -231,7 +290,7 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
     p.legend.location = "top_left"
     p.legend.background_fill_alpha = 0.7
     p.legend.ncols = 2  # Use two columns for the legend
-    p.legend.label_text_font_size = "8pt"  # Smaller font for legends
+    p.legend.label_text_font_size = f"{fontsize_m}pt"  # 使用中等字体大小
     p.legend.click_policy = "hide"  # Make legend interactive - can hide entries
     
     # Toggle按钮
@@ -264,38 +323,42 @@ def create_ratings_html(test_case_ratings_path, model_ratings_path, output_html_
     save(layout)
 
 
-def create_outcome_vs_rating_html(outcomes, rating_diffs, counts, output_html_path,
-                                 min_rating_diff=-850, max_rating_diff=850):
+def create_outcome_vs_rating_html(outcomes, rating_diffs, theoretical_outcomes, theoretical_rating_diffs, counts, output_html_path,
+                                 min_rating_diff=-1250, max_rating_diff=1250):
     """
     Create an interactive HTML visualization of outcomes vs rating differences.
     
     Args:
         outcomes: Array of outcome values
         rating_diffs: Array of rating differences
+        theoretical_outcomes: Array of theoretical outcome values
+        theoretical_rating_diffs: Array of theoretical rating differences
         counts: Array of counts for each data point
         output_html_path: Path to save the HTML output
-        min_rating_diff: Minimum rating difference to display
-        max_rating_diff: Maximum rating difference to display
-    """
-
-    # Theoretical Elo curve
-    theoretical_rating_diffs = np.linspace(min_rating_diff, max_rating_diff, 1000)
-    theoretical_outcomes = 1 / (1 + 10 ** (-theoretical_rating_diffs / 400))
-
-    # Compute correlation R
+        min_rating_diff: Minimum rating difference to display (default: -1250)
+        max_rating_diff: Maximum rating difference to display (default: 1250)
+    """    
+    # 从rating_system.py中获取正确的计算方法
     mask = ~np.isnan(rating_diffs) & ~np.isnan(outcomes)
+    masked_counts = counts[mask]
+    masked_rating_diffs = rating_diffs[mask]
+    masked_outcomes = outcomes[mask]
+    expected_outcomes = 1 / (1 + 10 ** (-masked_rating_diffs / 400))
+    
+    # 使用sklearn函数带权重计算指标
+    mae = mean_absolute_error(expected_outcomes, masked_outcomes, sample_weight=masked_counts)
+    mse = mean_squared_error(expected_outcomes, masked_outcomes, sample_weight=masked_counts)
 
-    counts = counts[mask]
-    rating_diffs = rating_diffs[mask]
-    outcomes = outcomes[mask]
-    expected_outcomes = 1 / (1 + 10 ** (-rating_diffs / 400))
-
-    mse = mean_squared_error(expected_outcomes, outcomes)
-    r2 = r2_score(expected_outcomes, outcomes)
-
-    curve_color = '#003D7C'  # NUS蓝色
-    point_color = '#EF7C00'  # NUS橙色
-    label_color = '#000000'  # 黑色
+    # 从visualization.py获取正确的颜色和字体大小
+    curve_color = 'deepskyblue'  # 与visualization.py一致
+    point_color = 'red'  # 与visualization.py一致 
+    label_color = '#000000'  # 黑色文本
+    
+    # 使用全局字体大小设置，避免冲突
+    # fontsize_l 和 fontsize_s 已在文件顶部定义
+    
+    # 计算alpha值，使用与visualization.py相同的方法
+    alpha_values = np.clip(0.9 * counts / counts.max() + 0.1, 0.1, 1)
     
     # Create Bokeh sources
     observed_source = ColumnDataSource(data=dict(
@@ -303,7 +366,7 @@ def create_outcome_vs_rating_html(outcomes, rating_diffs, counts, output_html_pa
         y=outcomes,
         expected=expected_outcomes,
         count=counts,
-        alpha=0.9*counts/counts.max()+0.1,
+        alpha=alpha_values,
     ))
     
     theoretical_source = ColumnDataSource(data=dict(
@@ -311,35 +374,67 @@ def create_outcome_vs_rating_html(outcomes, rating_diffs, counts, output_html_pa
         y=theoretical_outcomes
     ))
     
+    # 确保使用传入的理论值范围
+    x_range = (min_rating_diff, max_rating_diff)
+    
     # Create figure
     p = figure(
         x_axis_label="Rating Difference (Model - Test Case)",
-        y_axis_label="Model Score (Accuracy)",
+        y_axis_label="Performance (Accuracy)",
         width=900,
         height=500,
         tools="pan,box_zoom,wheel_zoom,reset,save",
-        x_range=(min_rating_diff, max_rating_diff),
+        x_range=x_range,
         y_range=(-0.05, 1.05),
         sizing_mode="stretch_both"  # Make the figure stretch to fill available space
     )
     
-    # Add theoretical curve
+    # 设置字体和轴标签样式
+    p.xaxis.axis_label = "Rating Difference (Model - Test Case)"
+    p.yaxis.axis_label = "Performance (Accuracy)"
+    p.xaxis.axis_label_text_font_size = f"{fontsize_l}pt"
+    p.xaxis.axis_label_text_font_style = "bold"
+    p.yaxis.axis_label_text_font_size = f"{fontsize_l}pt"
+    p.yaxis.axis_label_text_font_style = "bold"
+    
+    # 设置刻度标签样式
+    p.xaxis.major_label_text_font_size = f"{fontsize_s}pt"
+    p.yaxis.major_label_text_font_size = f"{fontsize_s}pt"
+    
+    # 设置X轴刻度，与visualization.py一致 - 修正刻度计算
+    # 确保即使参数改变也能正确生成刻度
+    step = 200
+    x_ticks = np.arange(
+        min_rating_diff + 50, 
+        max_rating_diff - 49, 
+        step
+    )
+    p.xaxis.ticker = x_ticks
+    
+    # 设置Y轴刻度，与visualization.py一致
+    p.yaxis.ticker = np.linspace(0.0, 1.0, 11)
+    
+    # 添加网格线，与visualization.py一致
+    p.grid.grid_line_alpha = 0.5
+    p.grid.grid_line_dash = "dashed"
+    
+    # Add theoretical curve - 增加linewidth与matplotlib一致
     p.line(
         x='x', y='y',
         source=theoretical_source,
-        line_width=2,
+        line_width=4,  # 增加线宽与visualization.py一致
         color=curve_color,
-        legend_label="Theoretical Curve"
+        legend_label="Theoretical"
     )
     
     # Add observed data points
     observed_points = p.scatter(
         x='x', y='y',
         source=observed_source,
-        size=6,
-        alpha="alpha",
+        size=8,  # 增大点大小使其更明显
+        alpha="alpha",  # 使用计算的alpha值
         color=point_color,
-        legend_label="Observed Data"
+        legend_label="Empirical"
     )
     
     p.add_tools(HoverTool(
@@ -352,32 +447,24 @@ def create_outcome_vs_rating_html(outcomes, rating_diffs, counts, output_html_pa
         ]
     ))
     
-    # Calculate MAE and R²
-    mae = mean_absolute_error(expected_outcomes, outcomes)
-    r2 = r2_score(expected_outcomes, outcomes)
+    # 添加参考线，与visualization.py一致
+    p.line(x=[0, 0], y=[0, 1], line_color="gray", line_dash="dashed", line_width=1)
+    p.line(x=[min_rating_diff, max_rating_diff], y=[0.5, 0.5], line_color="gray", line_dash="dashed", line_width=1)
     
-    # Add metrics text - moved to bottom right corner
-    p.text(max_rating_diff - 350, 0.15, [f"MAE = {mae:.3f}"], text_font_size="12pt", text_color=label_color)
-    p.text(max_rating_diff - 350, 0.10, [f"R² = {r2:.3f}"], text_font_size="12pt", text_color=label_color)
-    
-    # # Add reference lines
-    # p.line(x=[0, 0], y=[0, 1], line_color="gray", line_dash="dashed", line_width=1)
-    # p.line(x=[min_rating_diff, max_rating_diff], y=[0.5, 0.5], line_color="gray", line_dash="dashed", line_width=1)
-    
-    # Configure legend
-    p.legend.location = "top_left"
+    # 配置图例，与visualization.py一致
+    p.legend.location = "top_left"  # Bokeh使用top_left而不是upper left
     p.legend.background_fill_alpha = 0.8
+    p.legend.label_text_font_size = f"{fontsize_l}pt"
+    p.legend.border_line_alpha = 0.5  # 轻微边框
     
-    # # Add grid
-    # p.grid.grid_line_alpha = 0.3
-    
-        # Toggle按钮
+    # Toggle按钮
     toggle = Toggle(label="Show/Hide Legend", button_type="primary", active=True, width=120, height=25)
     toggle.js_link('active', p.legend[0], 'visible')
 
-    # 标题
-    title_div = Div(text="<h2 style='margin: 0; text-align: center;'>Test Case & Model Rating Distributions</h3>",
-                    width=400, height=30)
+    # 标题包含精度指标
+    title_text = f"Performance Prediction VS. Reality: MAE={mae:.4f}, MSE={mse:.4f}"
+    title_div = Div(text=f"<h2 style='margin: 0; text-align: center;'>{title_text}</h2>",
+                    width=600, height=30)
 
     # 左边按钮 + 中间 spacer + 中间标题 + 右边 spacer 实现居中
     header = row(
@@ -418,10 +505,10 @@ def main():
                         help='Size of histogram bins (default: 100)')
     parser.add_argument('--match_results', type=str, required=True,
                         help='Path to match results folder')
-    parser.add_argument('--min_rating_diff', type=int, default=-850,
-                        help='Minimum rating difference (default: -850)')
-    parser.add_argument('--max_rating_diff', type=int, default=850,
-                        help='Maximum rating difference (default: 850)')
+    parser.add_argument('--min_rating_diff', type=int, default=-1250,
+                        help='Minimum rating difference (default: -1250)')
+    parser.add_argument('--max_rating_diff', type=int, default=1250,
+                        help='Maximum rating difference (default: 1250)')
     
     args = parser.parse_args()
     
@@ -456,8 +543,9 @@ def main():
         # Generate sample data if match results are not provided
         rating_diffs = np.linspace(-800, 800, 50)
         rating_diffs = np.concatenate([rating_diffs + np.random.normal(0, 10, len(rating_diffs)) for _ in range(10)])
-        theoretical_outcomes = 1 / (1 + 10 ** (-rating_diffs / 400))
-        outcomes = theoretical_outcomes + np.random.normal(0, 0.1, len(rating_diffs))
+        theoretical_rating_diffs = np.linspace(args.min_rating_diff, args.max_rating_diff, 1000)
+        theoretical_outcomes = 1 / (1 + 10 ** (-theoretical_rating_diffs / 400))
+        outcomes = 1 / (1 + 10 ** (-rating_diffs / 400)) + np.random.normal(0, 0.1, len(rating_diffs))
         outcomes = np.clip(outcomes, 0, 1)
         counts = np.random.randint(1, 100, len(rating_diffs))
     else:
@@ -486,6 +574,10 @@ def main():
             columns=model_df.index
         )
         pivot_df_rating_diff = pivot_df_rating_diff.sort_index().sort_index(axis=1)
+        
+        # 计算理论值曲线，与rating_system.py中保持一致
+        theoretical_rating_diffs = np.linspace(args.min_rating_diff, args.max_rating_diff, 1000)
+        theoretical_outcomes = 1 / (1 + 10 ** (-theoretical_rating_diffs / 400))
         
         # Define bins for rating differences
         bin_edges = np.arange(args.min_rating_diff, args.max_rating_diff, args.bin_size)
@@ -538,6 +630,8 @@ def main():
     create_outcome_vs_rating_html(
         outcomes,
         rating_diffs,
+        theoretical_outcomes,
+        theoretical_rating_diffs,
         counts,
         outcome_html_path,
         min_rating_diff=args.min_rating_diff, 
