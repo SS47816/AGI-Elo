@@ -3,7 +3,7 @@
 from datetime import datetime
 
 
-project = "DriveSceneGen"
+project = "AGI_Elo"
 author = "Shuo"
 copyright = f"{datetime.now().year}, {author}"
 extensions = [
