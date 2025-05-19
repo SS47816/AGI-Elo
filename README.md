@@ -7,6 +7,7 @@ This is an academic paper project page template.
 - [ ] Change correct files and media
 - [ ] Write bokeh_viz README.md
 - [ ] Translate everything to English
+- [ ] Change website title and icon
 
 Example project pages built using this template are:
 - https://www.vision.huji.ac.il/deepsim/
