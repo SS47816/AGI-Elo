@@ -68,7 +68,7 @@ cd AGI_Elo
 ```bash
 # Auto install conda env AGI_Elo
 make install
-conda activate AGI-Elo
+conda activate AGI_Elo
 
 # Auto install all pip dependencies from requirements.txt
 make pip-install
