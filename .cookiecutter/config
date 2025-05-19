@@ -1,5 +1,5 @@
 # Change these at your peril:
-export PROJECT_NAME=DriveSceneGen
-export REPO_NAME=DriveSceneGen
-export DESCRIPTION=DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch
+export PROJECT_NAME=AGI_Elo
+export REPO_NAME=AGI_Elo
+export DESCRIPTION=AGI_Elo: How Far Are We From Mastering A Task?
 export PROJECT_OPENNESS=private

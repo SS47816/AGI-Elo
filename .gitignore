@@ -1,5 +1,6 @@
 # Data
-data/
+data/*
+!data/.gitkeep
 outputs/
 
 .recipes/
@@ -128,3 +129,7 @@ target/
 
 # NPM
 node_modules/
+
+# coding test scripts
+view_dataset.py
+check_data_result.py

@@ -2,13 +2,13 @@
    :hidden:
    :maxdepth: 1
 
-   api/DriveSceneGen
+   api/AGI_Elo
    License <license>
 
-DriveSceneGen
+AGI_Elo
 ===============================
 
-DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch
+AGI_Elo: How Far Are We From Mastering A Task?
 
 
 Indices and tables
