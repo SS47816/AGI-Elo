@@ -216,11 +216,11 @@ def plot_evaluation_trends(record_df: pd.DataFrame, save_path: str, dataset_name
         ax.grid(True, linestyle="--", alpha=0.6)
 
         # Legend in top right, slightly lower
-        ax.legend(loc="upper right", fontsize=16)
+        # ax.legend(loc="upper right", fontsize=16)
 
-        if title == titles[-1]:
-            ax.set_ylim(0, 1)
-            ax.legend(loc="lower right", fontsize=16)
+        # if title == titles[-1]:
+        #     ax.set_ylim(0, 1)
+        #     ax.legend(loc="lower right", fontsize=16)
 
     plt.tight_layout()
     if save_path:
