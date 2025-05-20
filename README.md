@@ -1,8 +1,6 @@
 # AGI-Elo
 
-**[[Project Page](https://ss47816.github.io/AGI-Elo/)] [[Code](https://github.com/SS47816/AGI-Elo)] [[Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)]**
-
-<!-- [[Paper](https://arxiv.org/abs/2309.14685)] -->
+**[[Preprint](https://arxiv.org/abs/2505.12844)] [[Project Page](https://ss47816.github.io/AGI-Elo/)] [[Code](https://github.com/SS47816/AGI-Elo)] [[HuggingFace](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12)] [[Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)]**
 
 ## AGI-Elo: How Far Are We From Mastering A Task?
 
@@ -19,36 +17,82 @@ _<sup>3</sup>Singapore MIT Alliance for Research and Technology_
 
 </div>
 
+<!-- ![Alt text](media/agi-elo.png) -->
+
 <div align="center">
   <table>
     <tr>
       <td align="center">
-         <img src="media/ImageNet_Accuracy_dist_Glicko_1.png" style="max-width:100%; height:auto;">
+         <img src="media/ImageNet.png" width="220px"><br/>
+         <sub><b>ImageNet</sub>
+      </td>
+      <td align="center">
+         <img src="media/MMLU.png" width="220px"><br/>
+         <sub><b>MMLU</sub>
+      </td>
+      <td align="center">
+         <img src="media/Waymo.png" width="220px"><br/>
+         <sub><b>Waymo</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+         <img src="media/COCO.png" width="220px"><br/>
+         <sub><b>COCO</sub>
+      </td>
+      <td align="center">
+         <img src="media/LiveCodeBench.png" width="220px"><br/>
+         <sub><b>LiveCodeBench</sub>
+      </td>
+      <td align="center">
+         <img src="media/NAVSIM.png" width="220px"><br/>
+         <sub><b>NAVSIM</sub>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- <div align="center">
+  <table>
+    <tr>
+      <td align="center">
+         <img src="media/ImageNet.png" style="max-width:100%; height:auto;">
          <sub>Image classification: ImageNet</sub>
       </td>
-         <td align="center"><img src="media/MMLU_Accuracy_dist_Glicko_1.png">
+         <td align="center"><img src="media/MMLU.png">
          <sub>Question answering: MMLU</sub>
       </td>
-         <td align="center"><img src="media/Waymo_mAP_dist_Glicko_1.png" style="max-width:100%; height:auto;">
+         <td align="center"><img src="media/Waymo.png" style="max-width:100%; height:auto;">
          <sub>Motion prediction: Waymo</sub>
       </td>
     </tr>
     <tr>
       <td align="center">
-         <img src="media/COCO_AP@[.50:.95]_dist_Glicko_1.png" style="max-width:100%; height:auto;" style="max-width:100%; height:auto;">
+         <img src="media/COCO.png" style="max-width:100%; height:auto;" style="max-width:100%; height:auto;">
          <sub>Object detection: COCO</sub>
       </td>
       <td align="center">
-         <img src="media/LiveCodeBench_Accuracy_dist_Glicko_1.png" style="max-width:100%; height:auto;">
+         <img src="media/LiveCodeBench.png" style="max-width:100%; height:auto;">
          <sub>Code generation: LiveCodeBench</sub>
       </td>
       <td align="center">
-         <img src="media/NAVSIM_PDM Score_dist_Glicko_1.png" style="max-width:100%; height:auto;">
+         <img src="media/NAVSIM.png" style="max-width:100%; height:auto;">
          <sub>Motion planning: NAVSIM</sub>
       </td>
     </tr>
   </table>
-</div>
+</div> -->
+
+## Main Results
+
+#### Rating distribution of datasets
+
+You can go to our [Project Page](https://ss47816.github.io/AGI-Elo/) for a more detailed rating distribution analysis.
+
+#### Test case difficulties and visualized samples
+
+You can the view the visualized test cases and their associated ratings on our [HuggingFace Collection](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12) for all six datasets.
 
 ## Abstract
 
@@ -76,11 +120,11 @@ make pip-install
 
 ## Usage
 
-#### 1. Prepare Model Predictions
+#### 1. Prepare model predictions
 
 Each `.pkl` file should contain the prediction results of **one model evaluated across all test cases**.
 
-You can download our precomputed prediction files from: [📁 Download Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)
+You can download our precomputed prediction files from: [Google Drive: Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)
 After downloading, organize the `./data` folder with the following structure:
 
 ```
@@ -127,7 +171,7 @@ After downloading, organize the `./data` folder with the following structure:
 
 ---
 
-#### 2. Run Rating Estimation
+#### 2. Run rating estimation
 
 To run rating estimation across **all tasks and datasets**, use:
 
@@ -141,18 +185,21 @@ Or optionally, you can run a specific task independently (e.g., classification):
 python3 AGI_Elo/pipeline/classification.py
 ```
 
-<!-- ## BibTeX
+The results will be save to their respective `ratings/` folders.
+
+## BibTeX
 
 If you find our work interesting, please consider citing our paper:
 
-    @misc{sun2023drivescenegen,
-        title={DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch},
-        author={Shuo Sun and Zekai Gu and Tianchen Sun and Jiawei Sun and Chengran Yuan and Yuhang Han and Dongen Li and Marcelo H. Ang Jr au2},
-        year={2023},
-        eprint={2309.14685},
-        archivePrefix={arXiv},
-        primaryClass={cs.RO}
-    } -->
+    @misc{sun2025agielofarmasteringtask,
+      title={AGI-Elo: How Far Are We From Mastering A Task?}, 
+      author={Shuo Sun and Yimin Zhao and Christina Dao Wen Lee and Jiawei Sun and Chengran Yuan and Zefan Huang and Dongen Li and Justin KW Yeoh and Alok Prakash and Thomas W. Malone and Marcelo H. Ang Jr},
+      year={2025},
+      eprint={2505.12844},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2505.12844}, 
+    }
 
 ## License
 
