@@ -1,6 +1,6 @@
 # AGI-Elo
 
-**[[Preprint](https://arxiv.org/abs/2505.12844)] [[Project Page](https://ss47816.github.io/AGI-Elo/)] [[Code](https://github.com/SS47816/AGI-Elo)] [[HuggingFace](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12)] [[Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)]**
+**[[Project Page](https://ss47816.github.io/AGI-Elo/)] [[HuggingFace](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12)] [[Preprint](https://arxiv.org/abs/2505.12844)] [[Code](https://github.com/SS47816/AGI-Elo)] [[Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)]**
 
 ## AGI-Elo: How Far Are We From Mastering A Task?
 
@@ -205,6 +205,6 @@ If you find our work interesting, please consider citing our paper:
 
 ## License
 
-This repository is licensed under the [Apache License 2.0](https://github.com/SS47816/DriveSceneGen/blob/main/LICENSE)
+This repository is licensed under the [Apache License 2.0](https://github.com/SS47816/AGI-Elo/blob/main/LICENSE)
 
 <small><p>Project based on <a target="_blank" href="https://github.com/nestauk/ds-cookiecutter">Nesta's data science project template</a>
