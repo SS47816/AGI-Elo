@@ -125,7 +125,8 @@ make pip-install
 
 Each `.pkl` file should contain the prediction results of **one model evaluated across all test cases**.
 
-You can download our precomputed prediction files from: [Google Drive: Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing)
+You can download our precomputed prediction files from: [Google Drive: Raw Data](https://drive.google.com/drive/folders/1Wpgeh6_FH-DRiPPVqbJYI3wTGNB4lbwk?usp=sharing).
+
 After downloading, organize the `./data` folder with the following structure:
 
 ```
@@ -135,8 +136,8 @@ After downloading, organize the `./data` folder with the following structure:
    ├── classification/
    │   ├── ImageNet/
    │       ├── val/
-   │       │   ├── predictions/
-   │       ├── ...
+   │           ├── predictions/
+   │           ├── ...
    │
    ├── detection/
    │   ├── COCO/
@@ -147,14 +148,14 @@ After downloading, organize the `./data` folder with the following structure:
    ├── question_answering/
    │   ├── MMLU/
    │       ├── test/
-   │       │   ├── predictions/
-   │       ├── ...
+   │           ├── predictions/
+   │           ├── ...
    │
    ├── coding/
    │   ├── LiveCodeBench/
    │       ├── test/
-   │       │   ├── predictions/
-   │       ├── ...
+   │           ├── predictions/
+   │           ├── ...
    │
    ├── motion_prediction/
    │   ├── Waymo/
