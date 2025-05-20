@@ -1,12 +1,12 @@
 /**
- * 简单标签切换功能
- * 使用方法：
- * 1. 引入tabs.css和tabs.js
- * 2. 创建HTML结构：
- *    - 包含类名为"tabs-container"的容器
- *    - 包含类名为"tabs"的无序列表，每个列表项有data-tab属性指向对应内容的ID
- *    - 包含类名为"tab-content"的内容区域，ID与对应标签的data-tab属性匹配
- * 3. 初始化：document.addEventListener('DOMContentLoaded', initTabs);
+ * Simple tab switching functionality
+ * Usage:
+ * 1. Import tabs.css and tabs.js
+ * 2. Create HTML structure:
+ *    - Container with class "tabs-container"
+ *    - Unordered list with class "tabs", each list item has a data-tab attribute pointing to the ID of corresponding content
+ *    - Content area with class "tab-content", ID matches the data-tab attribute of the corresponding tab
+ * 3. Initialize: document.addEventListener('DOMContentLoaded', initTabs);
  */
 
 function initTabs() {
@@ -99,5 +99,5 @@ function initTabs() {
     });
 }
 
-// 当DOM加载完成后初始化标签
+// Initialize tabs when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initTabs);

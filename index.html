@@ -24,8 +24,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>DriveSceneGen: Generating Diverse and Realistic Driving Scenarios from Scratch</title>
-  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <title>AGI-Elo: How Far Are We From Mastering A Task?</title>
+  <link rel="icon" type="image/png" href="static/images/icon.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
 
@@ -90,8 +90,8 @@
               <span>Christina Dao Wen Lee<sup>1</sup>,</span>
               <span>Jiawei Sun<sup>1</sup>,</span>
               <span>Chengran Yuan<sup>1</sup>,</span>
-              <span><br>Zefan Huang<sup>1</sup>,</span>
-              <span>Dongen Li<sup>1</sup>,</span>
+              <span><br>Zefan Huang<sup>1,3</sup>,</span>
+              <span>Dongen Li<sup>1,3</sup>,</span>
               <span>Justin KW Yeoh<sup>1</sup>,</span>
               <span>Alok Prakash<sup>3</sup>,</span>
               <span><br>Thomas W. Malone<sup>2,3</sup>,</span>
@@ -107,7 +107,7 @@
 
               <!-- ArXiv abstract Link -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2309.14685" target="_blank"
+                <a href="https://arxiv.org/abs/2505.12844" target="_blank"
                 class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -119,7 +119,7 @@
               <!-- <div class="publication-links"> -->
               <!-- Arxiv PDF link -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2309.14685.pdf" target="_blank"
+                <a href="https://arxiv.org/abs/2505.12844" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fas fa-file-pdf"></i>
@@ -141,7 +141,7 @@
 
               <!-- Github link -->
               <span class="link-block">
-                <a href="https://github.com/SS47816/DriveSceneGen" target="_blank"
+                <a href="https://github.com/SS47816/AGI-Elo" target="_blank"
                 class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="fab fa-github"></i>
@@ -375,7 +375,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            As the field progresses toward Artificial General Intelligence (AGI), there is a pressing need for more comprehensive and insightful evaluation frameworks that go beyond aggregate performance metrics. This paper introduces a unified rating system that jointly models the difficulty of individual test cases and the competency of AI models (or humans) across vision, language, and action domains. Unlike existing metrics that focus solely on models, our approach allows for fine-grained, difficulty-aware evaluations through competitive interactions between models and tasks, capturing both the long-tail distribution of real-world challenges and the competency gap between current models and full task mastery. We validate the generalizability and robustness of our system through extensive experiments on multiple established datasets and models across distinct AGI domains. The resulting rating distributions offer novel perspectives and interpretable insights into task difficulty, model progression, and the outstanding challenges that remain on the path to achieving full AGI task mastery.
+            As the field progresses toward Artificial General Intelligence (AGI), there is a pressing need for more comprehensive and insightful evaluation frameworks that go beyond aggregate performance metrics. This paper introduces a unified rating system that jointly models the difficulty of individual test cases and the competency of AI models (or humans) across vision, language, and action domains. Unlike existing metrics that focus solely on models, our approach allows for fine-grained, difficulty-aware evaluations through competitive interactions between models and tasks, capturing both the long-tail distribution of real-world challenges and the competency gap between current models and full task mastery. We validate the generalizability and robustness of our system through extensive experiments on multiple established datasets and models across distinct AGI domains. The resulting rating distributions offer novel perspectives and interpretable insights into task difficulty, model progression, and the outstanding challenges that remain on the path to achieving full AGI task mastery. To provide a qualitative evaluation of test case difficulty, we randomly sample test cases from each rating level for every dataset/task and present them in huggingface Dataset Viewer of <a href="https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12" target="_blank" style="color: #3273dc; text-decoration: underline;">this collection</a> for visual comparison.
           </p>
         </div>
       </div>
@@ -421,7 +421,14 @@
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
-        @misc{
+        @misc{sun2025agielofarmasteringtask,
+          title={AGI-Elo: How Far Are We From Mastering A Task?}, 
+          author={Shuo Sun and Yimin Zhao and Christina Dao Wen Lee and Jiawei Sun and Chengran Yuan and Zefan Huang and Dongen Li and Justin KW Yeoh and Alok Prakash and Thomas W. Malone and Marcelo H. Ang Jr},
+          year={2025},
+          eprint={2505.12844},
+          archivePrefix={arXiv},
+          primaryClass={cs.AI},
+          url={https://arxiv.org/abs/2505.12844}, 
         }
       </code></pre>
     </div>
