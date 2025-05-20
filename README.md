@@ -104,13 +104,14 @@ You can the view the visualized test cases and their associated ratings on our [
 
 ```bash
 git clone https://github.com/SS47816/AGI-Elo.git
-cd AGI_Elo
+cd AGI-Elo
 ```
 
 2. Install all Dependencies
 
 ```bash
 # Auto install conda env AGI_Elo
+direnv allow
 make install
 conda activate AGI_Elo
 
