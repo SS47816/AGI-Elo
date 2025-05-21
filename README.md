@@ -8,11 +8,11 @@
 
 <div align="center">
 
-_Shuo Sun<sup>1,3</sup>, Yimin Zhao<sup>1</sup>, Christina Dao Wen Lee<sup>1</sup>, Jiawei Sun<sup>1</sup>, Chengran Yuan<sup>1</sup>,
-Zefan Huang<sup>1,3</sup>, Dongen Li<sup>1,3</sup>, Justin KW Yeoh<sup>1</sup>, Alok Prakash<sup>3</sup>,
+_Shuo Sun<sup>1,3</sup>, Yimin Zhao<sup>1</sup>, Christina Dao Wen Lee<sup>1</sup>, Jiawei Sun<sup>1</sup>, Chengran Yuan<sup>1</sup>,<br>
+Zefan Huang<sup>1,3</sup>, Dongen Li<sup>1,3</sup>, Justin KW Yeoh<sup>1</sup>, Alok Prakash<sup>3</sup>,<br>
 Thomas W. Malone<sup>2,3</sup>, Marcelo H. Ang Jr.<sup>1,3</sup>_
 
-_<sup>1</sup>National University of Singapore_ _<sup>2</sup>Massachusetts Institute of Technology_
+_<sup>1</sup>National University of Singapore_ _<sup>2</sup>Massachusetts Institute of Technology_<br>
 _<sup>3</sup>Singapore MIT Alliance for Research and Technology_
 
 </div>
@@ -92,7 +92,7 @@ You can go to our [Project Page](https://ss47816.github.io/AGI-Elo/) for a more 
 
 #### Test case difficulties and visualized samples
 
-You can the view the visualized test cases and their associated ratings on our [HuggingFace Collection](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12) for all six datasets.
+You can view the visualized test cases samples and their associated ratings on our [HuggingFace Collection](https://huggingface.co/collections/ztony0712/agi-elo-6825d88e9587700e9dd41b12) for all six datasets.
 
 ## Abstract
 

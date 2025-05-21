@@ -133,3 +133,6 @@ node_modules/
 # coding test scripts
 view_dataset.py
 check_data_result.py
+
+# bokeh_viz
+bokeh_viz/
